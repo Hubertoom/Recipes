@@ -1,26 +1,29 @@
 package recipes.controller;
 
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import recipes.dto.RecipeDTO;
 import recipes.model.Recipe;
 import recipes.service.RecipeService;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "/api/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
 
-    public RecipeController(RecipeService recipeService) {
-        this.recipeService = recipeService;
+    @GetMapping("/{id}")
+    public ResponseEntity<RecipeDTO> getRecipe(@PathVariable int id) {
+        return ResponseEntity
+                .ok(recipeService.getRecipe(id));
     }
 
-    @GetMapping
-    public Recipe getRecipe() {
-        return recipeService.getRecipe(0);
-    }
-
-    @PostMapping
-    public void addRecipe(@RequestBody Recipe recipe) {
+    @PostMapping("/new")
+    public ResponseEntity<RecipeDTO> addRecipe(@RequestBody Recipe recipe) {
         recipeService.addRecipe(recipe);
+        return ResponseEntity
+                .ok(recipeService.getRecipe(0));
     }
 }
