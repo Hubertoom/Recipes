@@ -5,21 +5,23 @@ import org.springframework.stereotype.Component;
 import recipes.model.Recipe;
 import recipes.repository.RecipeRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Component
 @Getter
 public class RecipesFakeRepository implements RecipeRepository {
-    private final List<Recipe> recipeList = new ArrayList<>();
-
+    private final Map<Integer, Recipe> recipeList = new HashMap<>();
+    private int sequenceId = 1;
     @Override
-    public List<Recipe> getRecipes() {
-        return recipeList;
+    public Optional<Recipe> getRecipeById(Integer id) {
+        return Optional.ofNullable(recipeList.get(id));
     }
 
     @Override
-    public void addRecipe(Recipe recipe) {
-        recipeList.add(recipe);
+    public int addRecipe(Recipe recipe) {
+        recipeList.put(sequenceId, recipe);
+        return sequenceId++;
     }
 }

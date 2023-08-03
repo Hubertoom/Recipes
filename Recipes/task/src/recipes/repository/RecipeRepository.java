@@ -2,11 +2,11 @@ package recipes.repository;
 
 import recipes.model.Recipe;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface RecipeRepository {
 
-    List<Recipe> getRecipes();
+    Optional<Recipe> getRecipeById(Integer id);
 
-    void addRecipe(Recipe recipe);
+    int addRecipe(Recipe recipe);
 }
