@@ -5,6 +5,26 @@ import recipes.model.Recipe;
 public class Mapper {
 
     public static RecipeDTO mapRecipeToRecipeDTO(Recipe recipe) {
-        return new RecipeDTO(recipe.getName(), recipe.getDescription(), recipe.getIngredients(), recipe.getDirections());
+        return new RecipeDTO(
+                recipe.getName(),
+                recipe.getCategory(),
+                recipe.getDate(),
+                recipe.getDescription(),
+                recipe.getIngredients(),
+                recipe.getDirections()
+        );
+    }
+
+    public static RecipeIdDTO mapRecipeToRecipeIdDTO(Recipe recipe) {
+        return new RecipeIdDTO(recipe.getId());
+    }
+
+    public static Recipe mapRecipeDtoToRecipe(RecipeDTO recipeDTO) {
+        return new Recipe(
+                recipeDTO.name(),
+                recipeDTO.description(),
+                recipeDTO.ingredients(),
+                recipeDTO.directions(),
+                recipeDTO.category());
     }
 }
