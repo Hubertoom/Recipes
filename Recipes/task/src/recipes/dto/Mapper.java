@@ -1,7 +1,6 @@
 package recipes.dto;
 
 import recipes.model.Recipe;
-import recipes.model.User;
 
 public class Mapper {
 
@@ -27,9 +26,5 @@ public class Mapper {
                 recipeDTO.ingredients(),
                 recipeDTO.directions(),
                 recipeDTO.category());
-    }
-
-    public static User mapUserDtoToUser(UserDTO userDTO) {
-        return new User(userDTO.getEmail(), userDTO.getPassword());
     }
 }

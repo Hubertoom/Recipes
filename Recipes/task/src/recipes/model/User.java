@@ -2,6 +2,7 @@ package recipes.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,11 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @Entity(name = "User")
@@ -49,10 +52,14 @@ public class User implements UserDetails {
         recipes.add(recipe);
     }
 
-    public User(String email, String password) {
-        this.username = email.split("@")[0];
+    @NotNull
+    private String role;
+
+    public User(String username, String email, String password, String role) {
+        this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     @Override
@@ -80,9 +87,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(User user) {
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.recipes = user.getRecipes();
-    }
 }
