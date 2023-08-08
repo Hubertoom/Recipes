@@ -15,10 +15,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity(name = "User")
 @Table(name = "user")
 public class User implements UserDetails {

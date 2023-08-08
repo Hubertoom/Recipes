@@ -35,7 +35,8 @@ public class WebSecurityConfig {
                 )
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers().frameOptions().disable()
+                .formLogin()
+                //.headers().frameOptions().disable()
                 .and()
                 .build();
     }
