@@ -70,4 +70,3 @@ public class Recipe {
         this.user = user;
     }
 }
-

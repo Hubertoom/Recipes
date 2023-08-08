@@ -71,5 +71,4 @@ public class RecipeController {
         return ResponseEntity
                 .ok(recipeService.searchByCategoryOrName(name, category));
     }
-
 }

@@ -1,11 +1,12 @@
 package recipes.security;
 
-import org.springframework.boot.web.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,16 +31,17 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .httpBasic()
+        return http
+                .authorizeHttpRequests(matcherRegistry -> matcherRegistry
+                        .regexMatchers("/api/register", "/actuator/shutdown").permitAll()
+                        .regexMatchers(HttpMethod.GET).permitAll()
+                        .regexMatchers("/api/recipe/\\*\\*").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers().frameOptions().disable()
                 .and()
-                .authorizeHttpRequests(t -> t
-                .regexMatchers(HttpMethod.POST, "/api/register", "/actuator/shutdown").permitAll()
-                .regexMatchers(HttpMethod.GET, "/error").permitAll()
-                .regexMatchers("/api/recipe/\\*\\*").authenticated()
-                .anyRequest().permitAll()
-                );
-        return http.build();
+                .build();
     }
 }

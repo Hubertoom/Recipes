@@ -12,7 +12,6 @@ import recipes.service.RegistrationService;
 
 import javax.validation.Valid;
 
-
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/api/recipe")
